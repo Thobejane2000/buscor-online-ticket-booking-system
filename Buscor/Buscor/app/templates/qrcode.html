@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #qrcode {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>QR Code Generator</h1>
+    <div id="qrcode"></div>
+
+    <script>
+        // Function to get URL parameters
+        function getURLParams() {
+            const params = new URLSearchParams(window.location.search);
+            const paramsObj = {};
+            for (const [key, value] of params.entries()) {
+                paramsObj[key] = value;
+            }
+            return paramsObj;
+        }
+
+        // Generate QR code from URL parameters
+        function generateQRCode(text) {
+            new QRCode(document.getElementById("qrcode"), {
+                text: text,
+                width: 256,
+                height: 256,
+            });
+        }
+
+        // Get URL parameters and convert them to a string
+        const params = getURLParams();
+        const paramsString = JSON.stringify(params);
+
+        // Generate the QR code based on the URL parameters
+        if (paramsString !== '{}') {
+            generateQRCode(paramsString);
+        } else {
+            document.getElementById("qrcode").innerText = "No parameters found in URL";
+        }
+    </script>
+</body>
+</html>
